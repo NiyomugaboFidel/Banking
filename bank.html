@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Banking System</title>
+    <link rel="stylesheet" href="./css/bank.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <i class="fas fa-landmark"></i>
+            <span>ModernBank</span>
+        </div>
+        <div class="nav-links">
+            <button id="loginBtn" class="nav-btn">Login</button>
+            <button id="registerBtn" class="nav-btn">Register</button>
+        </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Login to Your Account</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginUsername">Username</label>
+                    <input type="text" id="loginUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn-primary">Login</button>
+                <div id="loginMessage" class="message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Create New Account</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerUsername">Username</label>
+                    <input type="text" id="registerUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Password</label>
+                    <input type="password" id="registerPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+                <button type="submit" class="btn-primary">Register</button>
+                <div id="registerMessage" class="message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="dashboard" class="dashboard hidden">
+        <div class="sidebar">
+            <div class="user-info">
+                <i class="fas fa-user-circle"></i>
+                <span id="userWelcome"></span>
+            </div>
+            <ul class="sidebar-menu">
+                <li class="active" data-tab="overview">
+                    <i class="fas fa-home"></i> Overview
+                </li>
+                <li data-tab="transactions">
+                    <i class="fas fa-exchange-alt"></i> Transactions
+                </li>
+                <li data-tab="transfer">
+                    <i class="fas fa-paper-plane"></i> Transfer
+                </li>
+                <li data-tab="settings">
+                    <i class="fas fa-cog"></i> Settings
+                </li>
+                <li id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <!-- Overview Tab -->
+            <div id="overview" class="tab-content active">
+                <h2>Account Overview</h2>
+                <div class="cards-container">
+                    <div class="card">
+                        <div class="card-icon">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <div class="card-info">
+                            <h3>Current Balance</h3>
+                            <div id="balance" class="balance">$0.00</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">
+                            <i class="fas fa-arrow-up"></i>
+                        </div>
+                        <div class="card-info">
+                            <h3>Total Deposits</h3>
+                            <div id="totalDeposits" class="amount">$0.00</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="card-info">
+                            <h3>Total Withdrawals</h3>
+                            <div id="totalWithdrawals" class="amount">$0.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="actions-container">
+                    <div class="action-card">
+                        <h3>Quick Deposit</h3>
+                        <form id="depositForm">
+                            <div class="form-group">
+                                <label for="depositAmount">Amount</label>
+                                <input type="number" id="depositAmount" min="0" step="0.01" required>
+                            </div>
+                            <button type="submit" class="btn-primary">Deposit</button>
+                            <div id="depositMessage" class="message"></div>
+                        </form>
+                    </div>
+                    <div class="action-card">
+                        <h3>Quick Withdraw</h3>
+                        <form id="withdrawForm">
+                            <div class="form-group">
+                                <label for="withdrawAmount">Amount</label>
+                                <input type="number" id="withdrawAmount" min="0" step="0.01" required>
+                            </div>
+                            <button type="submit" class="btn-primary">Withdraw</button>
+                            <div id="withdrawMessage" class="message"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transactions Tab -->
+            <div id="transactions" class="tab-content">
+                <h2>Transaction History</h2>
+                <div class="transaction-filters">
+                    <select id="transactionType">
+                        <option value="all">All Transactions</option>
+                        <option value="deposit">Deposits</option>
+                        <option value="withdrawal">Withdrawals</option>
+                    </select>
+                    <input type="date" id="dateFilter">
+                </div>
+                <div class="transaction-list" id="transactionList"></div>
+            </div>
+
+            <!-- Transfer Tab -->
+            <div id="transfer" class="tab-content">
+                <h2>Transfer Money</h2>
+                <form id="transferForm" class="transfer-form">
+                    <div class="form-group">
+                        <label for="recipientUsername">Recipient Username</label>
+                        <input type="text" id="recipientUsername" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="transferAmount">Amount</label>
+                        <input type="number" id="transferAmount" min="0" step="0.01" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Transfer</button>
+                    <div id="transferMessage" class="message"></div>
+                </form>
+            </div>
+
+            <!-- Settings Tab -->
+            <div id="settings" class="tab-content">
+                <h2>Account Settings</h2>
+                <form id="settingsForm" class="settings-form">
+                    <div class="form-group">
+                        <label for="newPassword">New Password</label>
+                        <input type="password" id="newPassword">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmNewPassword">Confirm New Password</label>
+                        <input type="password" id="confirmNewPassword">
+                    </div>
+                    <button type="submit" class="btn-primary">Update Password</button>
+                    <div id="settingsMessage" class="message"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="dashboard hidden">
+        <div class="sidebar">
+            <div class="user-info">
+                <i class="fas fa-user-shield"></i>
+                <span>Admin Panel</span>
+            </div>
+            <ul class="sidebar-menu">
+                <li class="active" data-tab="users">
+                    <i class="fas fa-users"></i> Users
+                </li>
+                <li data-tab="transactions">
+                    <i class="fas fa-list"></i> All Transactions
+                </li>
+                <li data-tab="stats">
+                    <i class="fas fa-chart-bar"></i> Statistics
+                </li>
+                <li id="adminLogoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <div id="users" class="tab-content active">
+                <h2>User Management</h2>
+                <div class="user-list" id="adminUserList"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>ModernBank</h3>
+                <p>Your trusted banking partner</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Email: support@modernbank.com</p>
+                <p>Phone: (555) 123-4567</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 ModernBank. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="./js/bank.js"></script>
+</body>
+</html>
