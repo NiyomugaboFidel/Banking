@@ -530,8 +530,9 @@ const bankSystem = new BankSystem();
 const main = document.getElementById('main');
 const logoutBtn = document.querySelector('.logout');
 const navlink = document.querySelector('.nav-links')
+const footer = document.querySelector('.footer')
 console.log(localStorage.getItem('currentUser'), main, logoutBtn);
-localStorage.getItem('currentUser') ? (main.style.display = 'none', navlink.style.display = 'none') : logoutBtn.style.display = 'none';
+localStorage.getItem('currentUser') ? (main.style.display = 'none', navlink.style.display = 'none', footer.style.display = 'none') : logoutBtn.style.display = 'none';
 document.addEventListener("DOMContentLoaded", () => {
     const tabs = document.querySelectorAll(".sidebar-menu li");
     const tabContents = document.querySelectorAll(".tab-content");
