@@ -28,6 +28,7 @@ class BankSystem {
         };
 
         this.saveData();
+        window.location.reload();
         return true;
     }
 
@@ -39,7 +40,10 @@ class BankSystem {
 
         this.currentUser = username;
         localStorage.setItem('currentUser', username);
+         window.location.reload();
         return user.isAdmin;
+
+     
     }
 
     logout() {
@@ -48,6 +52,8 @@ class BankSystem {
         this.hideAllDashboards();
         this.showElement('loginBtn');
         this.showElement('registerBtn');
+
+        window.location.reload();
     }
 
     // Transaction Methods
@@ -197,15 +203,15 @@ class BankSystem {
         const user = this.users[this.currentUser];
         
         // Update balance
-        document.getElementById('balance').textContent = `$${user.balance.toFixed(2)}`;
+        document.getElementById('balance').textContent = `$${user.balance}`;
         
         // Update user welcome message
         document.getElementById('userWelcome').textContent = this.currentUser;
 
         // Update totals
         const totals = this.calculateTotals();
-        document.getElementById('totalDeposits').textContent = `$${totals.deposits.toFixed(2)}`;
-        document.getElementById('totalWithdrawals').textContent = `$${totals.withdrawals.toFixed(2)}`;
+        document.getElementById('totalDeposits').textContent = `$${totals.deposits}`;
+        document.getElementById('totalWithdrawals').textContent = `$${totals.withdrawals}`;
 
         // Update transaction list
         this.updateTransactionList();
@@ -217,7 +223,7 @@ class BankSystem {
     }
 
     updateTransactionList() {
-        const transactionList = document.getElementById('transactionList');
+        const transactionList = document.getElementById('transaction-body');
         const type = document.getElementById('transactionType').value;
         const date = document.getElementById('dateFilter').value;
         
@@ -235,16 +241,17 @@ class BankSystem {
         // Clear existing list
         transactionList.innerHTML = '';
 
+        const tableBody = document.getElementById("transaction-body");
+
         // Add transactions
         transactions.forEach(transaction => {
-            const item = document.createElement('div');
-            item.className = 'transaction-item';
-            
+            const row = document.createElement("tr");
+        
             let description = '';
             let amountClass = '';
             let amountPrefix = '';
-
-            switch(transaction.type) {
+        
+            switch (transaction.type) {
                 case 'deposit':
                     description = 'Deposit';
                     amountClass = 'deposit';
@@ -266,22 +273,17 @@ class BankSystem {
                     amountPrefix = '+';
                     break;
             }
-
-            item.innerHTML = `
-                <div class="transaction-info">
-                    <span class="transaction-date">${new Date(transaction.date).toLocaleString()}</span>
-                    <span class="transaction-description">${description}</span>
-                </div>
-                <div class="transaction-amount ${amountClass}">
-                    ${amountPrefix}$${transaction.amount.toFixed(2)}
-                </div>
-                <div class="transaction-balance">
-                    Balance: $${transaction.balance.toFixed(2)}
-                </div>
+        
+            row.innerHTML = `
+                <td class="transaction-date">${new Date(transaction.date).toLocaleString()}</td>
+                <td class="transaction-description">${description}</td>
+                <td class="transaction-amount ${amountClass}">${amountPrefix}$${transaction.amount}</td>
+                <td class="transaction-balance">Balance: $${transaction.balance}</td>
             `;
-
-            transactionList.appendChild(item);
+        
+            tableBody.appendChild(row);
         });
+        
     }
 
     updateAdminDashboard() {
@@ -294,7 +296,7 @@ class BankSystem {
                 userCard.className = 'user-card';
                 userCard.innerHTML = `
                     <h3>${username}</h3>
-                    <p>Balance: $${userData.balance.toFixed(2)}</p>
+                    <p>Balance: $${userData.balance}</p>
                     <p>Total Transactions: ${userData.transactions.length}</p>
                     <button onclick="bankSystem.toggleUserAccount('${username}')">
                         ${userData.isLocked ? 'Unlock' : 'Lock'} Account
@@ -377,9 +379,11 @@ class BankSystem {
             messageElement.textContent = message;
             messageElement.className = 'success message';
             e.target.reset();
+            window.location.reload();
         } catch (error) {
             messageElement.textContent = error.message;
             messageElement.className = 'error message';
+            window.location.reload();
         }
     }
 
@@ -393,9 +397,11 @@ class BankSystem {
             messageElement.textContent = message;
             messageElement.className = 'success message';
             e.target.reset();
+            window.location.reload();
         } catch (error) {
             messageElement.textContent = error.message;
             messageElement.className = 'error message';
+            window.location.reload();
         }
     }
 
@@ -410,9 +416,11 @@ class BankSystem {
             messageElement.textContent = message;
             messageElement.className = 'success message';
             e.target.reset();
+            window.location.reload();
         } catch (error) {
             messageElement.textContent = error.message;
             messageElement.className = 'error message';
+            window.location.reload();
         }
     }
 
@@ -434,9 +442,11 @@ class BankSystem {
             messageElement.textContent = 'Password updated successfully';
             messageElement.className = 'success message';
             e.target.reset();
+            window.location.reload();
         } catch (error) {
             messageElement.textContent = error.message;
             messageElement.className = 'error message';
+            window.location.reload();
         }
     }
 
@@ -515,3 +525,33 @@ class BankSystem {
 
 // Initialize the bank system
 const bankSystem = new BankSystem();
+
+
+const main = document.getElementById('main');
+const logoutBtn = document.querySelector('.logout');
+const navlink = document.querySelector('.nav-links')
+console.log(localStorage.getItem('currentUser'), main, logoutBtn);
+localStorage.getItem('currentUser') ? (main.style.display = 'none', navlink.style.display = 'none') : logoutBtn.style.display = 'none';
+document.addEventListener("DOMContentLoaded", () => {
+    const tabs = document.querySelectorAll(".sidebar-menu li");
+    const tabContents = document.querySelectorAll(".tab-content");
+
+    tabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+            const selectedTab = tab.getAttribute("data-tab");
+
+            // Remove active class from all tabs and add to the clicked tab
+            tabs.forEach(t => t.classList.remove("active"));
+            tab.classList.add("active");
+
+            // Hide all tab contents and show the selected one
+            tabContents.forEach(content => {
+                if (content.id === selectedTab) {
+                    content.classList.add("active");
+                } else {
+                    content.classList.remove("active");
+                }
+            });
+        });
+    });
+});

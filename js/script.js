@@ -1,94 +1,55 @@
-const prompt = require("prompt-sync")();
 
-class BankAccount {
-  constructor() {
-    this.user = null; // Initially no user
-  }
+// Loading Animation
+window.addEventListener('load', () => {
+    const loadingOverlay = document.querySelector('.loading-overlay');
+    loadingOverlay.style.opacity = '0';
+    setTimeout(() => {
+        loadingOverlay.style.display = 'none';
+    }, 500);
+});
 
-  createAccount(name, password) {
-    if (!name || !password) return "Username and password are required!";
-    this.user = {
-      username: name,
-      password: password,
-    };
-    return `Registration Successful for ${this.user.username}`;
-  }
-
-  userDetails() {
-    return this.user ? this.user : "No user account found";
-  }
-
-  deleteAccount() {
-    if (this.user) {
-      const deletedUser = this.user.username;
-      this.user = null;
-      return `User ${deletedUser} deleted successfully.`;
+// Scroll Animation for Header
+window.addEventListener('scroll', () => {
+    const header = document.querySelector('.header');
+    if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+    } else {
+        header.classList.remove('scrolled');
     }
-    return "No user account found to delete.";
-  }
-}
+});
 
-class ManageBankAccount extends BankAccount {
-  constructor(bankAccount) {
-    super();
-    this.user = bankAccount.user; // Share user data with BankAccount instance
-    this.balance = 0;
-  }
+// Animate Elements on Scroll
+const observerOptions = {
+    threshold: 0.1
+};
 
-  deposit(amount) {
-    if (!this.user) return "No user account found!";
-    if (amount <= 0) return "Deposit amount must be greater than 0.";
-    this.balance += amount;
-    return `Deposit successful to ${this.user.username}. Your new balance: ${this.balance}`;
-  }
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, observerOptions);
 
-  withdraw(amount){
-    if (!this.user) return "No user account found!";
-    const password = prompt("Enter your password: ");
-    if(password !== this.user.password) {
-      return "Incorrect password. Withdrawal failed.";
+// Observe feature cards
+document.querySelectorAll('.feature-card').forEach(card => {
+    observer.observe(card);
+});
 
-    }
+// Observe service cards
+document.querySelectorAll('.service-card').forEach(card => {
+    observer.observe(card);
+});
 
-    if (amount <= 0) return "Withdrawal amount must be greater than 0.";
-    if (amount > this.balance) return "Insufficient balance.";
-    
-    this.balance -= amount;
-    return `Withdraw successful. New balance: ${this.balance}`;
-  }
-
-  getBalance() {
-    const password = prompt("Enter your password: ");
-    if(password !== this.user.password) {
-      return "Incorrect password. Get balance failed.";
-
-    }
-    return this.user ? `Your balance: ${this.balance}` : "No user account found!";
-  }
-}
-
-// Create a single bank account instance
-const bankAccount = new BankAccount();
-
-// Create account first
-console.log(bankAccount.createAccount(prompt("Username: "), prompt("Password: ")));
-console.log(bankAccount.userDetails()); // Should return user details
-
-// Pass the same bankAccount instance to ManageBankAccount
-const manageBankAccount = new ManageBankAccount(bankAccount);
-
-// Now deposits and withdrawals will work correctly
-console.log(manageBankAccount.deposit(Number(prompt("Enter amount to deposit: "))));
-console.log(manageBankAccount.getBalance());
-
-console.log(manageBankAccount.withdraw(Number(prompt("Enter amount to withdraw: "))));
-console.log(manageBankAccount.getBalance());
-
-console.log(bankAccount.userDetails());
-
-console.log(bankAccount.deleteAccount()); // Deleting the account
-console.log(bankAccount.userDetails()); // Should return "No user account found"
-
-
-
-
+// Smooth Scroll for Navigation Links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+    });
+});

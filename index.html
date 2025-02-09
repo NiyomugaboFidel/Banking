@@ -9,17 +9,127 @@
 </head>
 <body>
     <!-- Navigation Bar -->
+   <header>
     <nav class="navbar">
         <div class="nav-brand">
             <i class="fas fa-landmark"></i>
             <span>ModernBank</span>
         </div>
         <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
             <button id="loginBtn" class="nav-btn">Login</button>
             <button id="registerBtn" class="nav-btn">Register</button>
         </div>
+        <button id="logoutBtn"  class="nav-btn logout">logout</button>
     </nav>
+   </header>
 
+    <main id="main">
+      
+
+  
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Header -->
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Modern Banking</h1>
+            <p>Experience secure and innovative financial solutions tailored to your needs</p>
+            <a href="#" class="btn2 btn-primary2">Get Started</a>
+            <a href="#" class="btn2 btn-secondary2">Learn More</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Why Choose Us</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Secure Banking</h3>
+                    <p>Advanced security measures to protect your financial assets</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile Banking</h3>
+                    <p>Access your accounts anytime, anywhere with our mobile app</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Investment Solutions</h3>
+                    <p>Expert guidance for your investment portfolio</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2>Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <img src="https://www.bcefcu.com/wp-content/uploads/2024/09/person-to-person-money-transfer.jpg" alt="Personal Banking">
+                    <div class="service-content">
+                        <h3>Personal Banking</h3>
+                        <p>Tailored solutions for your personal finances</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <img src="https://d6xcmfyh68wv8.cloudfront.net/learn-content/uploads/2022/12/BB-_-Blog-Banner-Image.png" alt="Business Banking">
+                    <div class="service-content">
+                        <h3>Business Banking</h3>
+                        <p>Comprehensive solutions for your business</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <img src="https://cdn.sanity.io/images/anl9abaw/production/9b6a0a845a3923c6e2b53578ff092a18b6fe5a53-2000x1500.jpg" alt="Investment Banking">
+                    <div class="service-content">
+                        <h3>Investment Banking</h3>
+                        <p>Strategic investment opportunities</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <div class="contact-info">
+                <div class="contact-card">
+                    <i class="fas fa-phone"></i>
+                    <h3>Call Us</h3>
+                    <p>1-800-ACE-BANK</p>
+                </div>
+                <div class="contact-card">
+                    <i class="fas fa-envelope"></i>
+                    <h3>Email Us</h3>
+                    <p>support@acebank.com</p>
+                </div>
+                <div class="contact-card">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>Visit Us</h3>
+                    <p>123 Banking Street, Financial District</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    </main>
     <!-- Login Modal -->
     <div id="loginModal" class="modal">
         <div class="modal-content">
@@ -66,29 +176,42 @@
 
     <!-- Main Dashboard -->
     <div id="dashboard" class="dashboard hidden">
-        <div class="sidebar">
-            <div class="user-info">
-                <i class="fas fa-user-circle"></i>
-                <span id="userWelcome"></span>
+          <div class="sidebar-container">
+            <div class="sidebar">
+                <div class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="userWelcome"></span>
+                </div>
+                <ul class="sidebar-menu">
+                    <li class="active" data-tab="overview">
+                        <a href="#overview">
+                            <i class="fas fa-home"></i> Overview
+                        </a>
+                    </li>
+                    <li data-tab="transactions">
+                        <a href="#transactions">
+                            <i class="fas fa-exchange-alt"></i> Transactions
+                        </a>
+                    </li>
+                    <li data-tab="transfer">
+                        <a href="#transfer">
+                            <i class="fas fa-paper-plane"></i> Transfer
+                        </a>
+                    </li>
+                    <li data-tab="settings">
+                        <a href="#settings">
+                            <i class="fas fa-cog"></i> Settings
+                        </a>
+                    </li>
+                    <li id="logoutBtn">
+                        <a href="#logout">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+                
             </div>
-            <ul class="sidebar-menu">
-                <li class="active" data-tab="overview">
-                    <i class="fas fa-home"></i> Overview
-                </li>
-                <li data-tab="transactions">
-                    <i class="fas fa-exchange-alt"></i> Transactions
-                </li>
-                <li data-tab="transfer">
-                    <i class="fas fa-paper-plane"></i> Transfer
-                </li>
-                <li data-tab="settings">
-                    <i class="fas fa-cog"></i> Settings
-                </li>
-                <li id="logoutBtn">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </li>
-            </ul>
-        </div>
+          </div>
 
         <div class="main-content">
             <!-- Overview Tab -->
@@ -161,7 +284,22 @@
                     </select>
                     <input type="date" id="dateFilter">
                 </div>
-                <div class="transaction-list" id="transactionList"></div>
+
+                    <table class="transaction-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Description</th>
+                                <th>Amount</th>
+                                <th>Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transaction-body">
+                            <!-- Transactions will be inserted here dynamically -->
+                        </tbody>
+                    </table>
+                    
+
             </div>
 
             <!-- Transfer Tab -->
@@ -233,30 +371,36 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>ModernBank</h3>
-                <p>Your trusted banking partner</p>
+
+            <div class="footer-content ">
+                <div class="footer-section">
+                    <h3>ModernBank</h3>
+                    <p>Your trusted banking partner</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p>Email: support@modernbank.com</p>
+                    <p>Phone: (555) 123-4567</p>
+                </div>
             </div>
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                </ul>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ModernBank. All rights reserved.</p>
             </div>
-            <div class="footer-section">
-                <h3>Contact Us</h3>
-                <p>Email: support@modernbank.com</p>
-                <p>Phone: (555) 123-4567</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 ModernBank. All rights reserved.</p>
-        </div>
+
+   
     </footer>
 
+    <script src="./js/script.js"></script>
     <script src="./js/bank.js"></script>
+
+
 </body>
 </html>
